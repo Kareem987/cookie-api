@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { cookies } from "next/headers";
 
 export async function GET(req: NextRequest) {
   const cookieStore = req.cookies;
@@ -9,5 +8,23 @@ export async function GET(req: NextRequest) {
     allCookies[cookie.name] = cookie.value;
   });
 
-  return NextResponse.json(allCookies);
+  const res = NextResponse.json(allCookies);
+
+  // Add CORS headers
+  res.headers.set("Access-Control-Allow-Origin", "*"); // or restrict to your domain
+  res.headers.set("Access-Control-Allow-Methods", "GET, OPTIONS");
+  res.headers.set("Access-Control-Allow-Headers", "Content-Type");
+
+  return res;
+}
+
+// Handle preflight request
+export async function OPTIONS() {
+  return NextResponse.json(null, {
+    headers: {
+      "Access-Control-Allow-Origin": "*", // or your domain
+      "Access-Control-Allow-Methods": "GET, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+    },
+  });
 }
