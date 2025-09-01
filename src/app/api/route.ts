@@ -12,6 +12,8 @@ export async function GET(req: NextRequest) {
 
   // Add CORS headers
   res.headers.set("Access-Control-Allow-Origin", "https://www.arabic.chat"); // or restrict to your domain
+  res.headers.set("Access-Control-Allow-Credentials", "true"); // or restrict to your domain
+
   res.headers.set("Access-Control-Allow-Methods", "GET, OPTIONS");
   res.headers.set("Access-Control-Allow-Headers", "Content-Type");
 
